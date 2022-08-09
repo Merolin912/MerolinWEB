@@ -1,0 +1,1033 @@
+ CREATE TABLE TEAM(
+ TEAMID VARCHAR(20) PRIMARY KEY,
+ TEAMNAME VARCHAR(20) NOT NULL,
+ COACH VARCHAR(20),
+ CITY VARCHAR(20));
+
+ ALTER TABLE TEAM
+ ADD CAPTAINID VARCHAR(20);
+ 
+ ALTER TABLE TEAM
+ ADD FOREIGN KEY(CAPTAINID)REFERENCES PLAYER(PLAYERID);
+ 
+ mysql> DESC TEAM;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TEAMID    | varchar(20) | NO   | PRI | NULL    |       |
+| TEAMNAME  | varchar(20) | NO   |     | NULL    |       |
+| COACH     | varchar(20) | YES  |     | NULL    |       |
+| CITY      | varchar(20) | YES  |     | NULL    |       |
+| CAPTAINID | varchar(20) | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+ CREATE TABLE PLAYER(
+ PLAYERID VARCHAR(20) PRIMARY KEY,
+ PLAYERNAME VARCHAR(20) NOT NULL,
+ CONTACT INT(10) NOT NULL,
+ AGE INT(6) NOT NULL,
+ TEAMID VARCHAR(20),
+ FOREIGN KEY(TEAMID)REFERENCES TEAM(TEAMID));
+
+
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| VP21MC023_CRICKET  |
+| VP21MC023_STUDENT  |
+| VP21MC023_college  |
+| information_schema |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> use VP21MC023_CRICKET;
+Database changed
+mysql> CREATE TABLE TEAM(
+    -> TEAMID VARCHAR(20) PRIMARY KEY,
+    -> TEAMNAME VARCHAR(20) NOT NULL
+    -> COACH VARCHAR(20),
+    -> CITY VARCHAR(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'COACH VARCHAR(20),
+CITY VARCHAR(20))' at line 4
+mysql> CREATE TABLE TEAM(
+    -> TEAMID VARCHAR(20) PRIMARY KEY,
+    -> TEAMNAME VARCHAR(20) NOT NULL,
+    -> COACH VARCHAR(20),
+    -> CITY VARCHAR(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE PLAYER(
+    -> PLAYERID VARCHAR(20) PRIMARY KEY,
+    -> PLAYERNAME VARCHAR(20) NOT NULL
+    -> CONTACT INT(10) NOT NULL,
+    -> AGE INT(6) NOT NULL,
+    -> foreign key(TEAMID) REFERENCES TEAM(TEAMID));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONTACT INT(10) NOT NULL,
+AGE INT(6) NOT NULL,
+foreign key(TEAMID) REFERENCES TE' at line 4
+mysql> CREATE TABLE PLAYER(
+    -> PLAYERID VARCHAR(20) PRIMARY KEY,
+    -> PLAYERNAME VARCHAR(20) NOT NULL
+    -> CONTACT INT(10) NOT NULL,
+    -> AGE INT(6) NOT NULL,
+    -> FOREIGN KEY(TEAMID)REFERENCES TEAM(TEAMID));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONTACT INT(10) NOT NULL,
+AGE INT(6) NOT NULL,
+FOREIGN KEY(TEAMID)REFERENCES TEA' at line 4
+mysql> CREATE TABLE PLAYER(
+    -> PLAYERID VARCHAR(20) PRIMARY KEY,
+    -> PLAYERNAME VARCHAR(20) NOT NULL,
+    -> CONTACT INT(10) NOT NULL,
+    -> AGE INT(6) NOT NULL,
+    -> FOREIGN KEY(TEAMID)REFERENCES TEAM(TEAMID));
+ERROR 1072 (42000): Key column 'TEAMID' doesn't exist in table
+mysql> CREATE TABLE MATCH(
+    -> MATCHID VARCHAR(20) PRIMARY KEY,
+    -> DATETIME DATETIME NOT NULL,
+    -> TEAMID1 INT(10) NOT NULL,
+    -> TEAMID2 INT(10) NOT NULL,
+    -> TEAMID VARCHAR(20),
+    -> FOREIGN KEY(STADIUMID) REFERENCES STADIUM(STADIUMID));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MATCH(
+MATCHID VARCHAR(20) PRIMARY KEY,
+DATETIME DATETIME NOT NULL,
+TEAMID1 INT(' at line 1
+mysql> CREATE TABLE PLAYER(
+    -> PLAYERID VARCHAR(20) PRIMARY KEY,
+    -> PLAYERNAME VARCHAR(20) NOT NULL,
+    -> CONTACT INT(10) NOT NULL,
+    -> AGE INT(6) NOT NULL,
+    -> TEAMID VARCHAR(20),
+    -> FOREIGN KEY(TEAMID)REFERENCES TEAM(TEAMID));
+Query OK, 0 rows affected, 2 warnings (0.03 sec)
+
+mysql> CREATE TABLE MATCH(
+    -> MATCHID VARCHAR(20) PRIMARY KEY,
+    -> TEAMID1 INT(10) NOT NULL,
+    -> TEAMID2 INT(10) NOT NULL,
+    -> SDATE DATE,
+    -> STIME TIME);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MATCH(
+MATCHID VARCHAR(20) PRIMARY KEY,
+TEAMID1 INT(10) NOT NULL,
+TEAMID2 INT(10' at line 1
+mysql> CREATE TABLE STADIUM(
+    -> STADIUM_ID VARCHAR(20) PRIMARY KEY,
+    -> STADIUM_NAME VARCHAR(20) NOT NULL,
+    -> CITY VARCHAR(20),
+    -> AREA_NAME VARCHAR(20),
+    -> PINCODE INT(10));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> CREATE TABLE MATCH(
+    -> WINNER_TEAM_ID VARCHAR(20),
+    -> FOREIGN KEY(WINNER_TEAM_ID)REFERENCES TEAM(TEAMID),
+    -> MATCHID VARCHAR(20) PRIMARY KEY,
+    -> TEAMID1 VARCHAR(20),
+    -> FOREIGN KEY(TEAMID1)REFERENCES TEAM(TEAMID),
+    -> TEAMID2 VARCHAR(20),
+    -> FOREIGN KEY(TEAMID2)REFERENCES TEAM(TEAMID),
+    -> SDATE DATE,
+    -> STIME TIMESTAMP);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MATCH(
+WINNER_TEAM_ID VARCHAR(20),
+FOREIGN KEY(WINNER_TEAM_ID)REFERENCES TEAM(TE' at line 1
+mysql> CREATE TABLE MATCH1(
+    -> WINNER_TEAM_ID VARCHAR(20),
+    -> FOREIGN KEY(WINNER_TEAM_ID)REFERENCES TEAM(TEAMID),
+    -> MATCHID VARCHAR(20) PRIMARY KEY,
+    -> TEAMID1 VARCHAR(20),
+    -> FOREIGN KEY(TEAMID1)REFERENCES TEAM(TEAMID),
+    -> TEAMID2 VARCHAR(20),
+    -> FOREIGN KEY(TEAMID2)REFERENCES TEAM(TEAMID),
+    -> SDATE DATE,
+    -> STIME TIMESTAMP);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE MAN_OF_MATCH(
+    -> PRIMARY KEY(PLAYERID,MATCHID));
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> CREATE TABLE MAN_OF_MATCH(
+    -> PLAYERID VARCHAR(20),
+    -> MATCHID VARCHAR(20),
+    -> PRIMARY KEY(PLAYERID,MATCHID));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DESC TEAM;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| TEAMID   | varchar(20) | NO   | PRI | NULL    |       |
+| TEAMNAME | varchar(20) | NO   |     | NULL    |       |
+| COACH    | varchar(20) | YES  |     | NULL    |       |
+| CITY     | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> DESC PLAYER;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| PLAYERID   | varchar(20) | NO   | PRI | NULL    |       |
+| PLAYERNAME | varchar(20) | NO   |     | NULL    |       |
+| CONTACT    | int         | NO   |     | NULL    |       |
+| AGE        | int         | NO   |     | NULL    |       |
+| TEAMID     | varchar(20) | YES  | MUL | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> DESC MATCH;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MATCH' at line 1
+mysql> DESC MATCH1;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| WINNER_TEAM_ID | varchar(20) | YES  | MUL | NULL    |       |
+| MATCHID        | varchar(20) | NO   | PRI | NULL    |       |
+| TEAMID1        | varchar(20) | YES  | MUL | NULL    |       |
+| TEAMID2        | varchar(20) | YES  | MUL | NULL    |       |
+| SDATE          | date        | YES  |     | NULL    |       |
+| STIME          | timestamp   | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> DESC STADIUM;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| STADIUM_ID   | varchar(20) | NO   | PRI | NULL    |       |
+| STADIUM_NAME | varchar(20) | NO   |     | NULL    |       |
+| CITY         | varchar(20) | YES  |     | NULL    |       |
+| AREA_NAME    | varchar(20) | YES  |     | NULL    |       |
+| PINCODE      | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> DESC MAN_OF_MATCH;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| PLAYERID | varchar(20) | NO   | PRI | NULL    |       |
+| MATCHID  | varchar(20) | NO   | PRI | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> ALTER TABLE TEAM
+    -> ADD CAPTAINID VARCHAR(20);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC TEAM;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TEAMID    | varchar(20) | NO   | PRI | NULL    |       |
+| TEAMNAME  | varchar(20) | NO   |     | NULL    |       |
+| COACH     | varchar(20) | YES  |     | NULL    |       |
+| CITY      | varchar(20) | YES  |     | NULL    |       |
+| CAPTAINID | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE TEAM
+    -> ADD FOREIGN KEY(CAPTAINID)REFERENCES PLAYER(PLAYERID);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE MATCH
+    -> ADD STADIUMID VARCHAR(20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MATCH
+ADD STADIUMID VARCHAR(20)' at line 1
+mysql> ALTER TABLE MATCH1
+    -> ADD STADIUMID VARCHAR(20);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE MATCH1
+    -> ADD FOREIGN KEY(STADIUMID)REFERENCES STADIUM(STADIUMID);
+ERROR 3734 (HY000): Failed to add the foreign key constraint. Missing column 'STADIUMID' for constraint 'MATCH1_ibfk_4' in the referenced table 'STADIUM'
+mysql> ALTER TABLE MATCH1
+    -> ADD STADIUM_ID VARCHAR(20);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE MATCH1
+    -> ADD FOREIGN KEY(STADIUM_ID)REFERENCES STADIUM(STADIUM_ID);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC MATCH1;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| WINNER_TEAM_ID | varchar(20) | YES  | MUL | NULL    |       |
+| MATCHID        | varchar(20) | NO   | PRI | NULL    |       |
+| TEAMID1        | varchar(20) | YES  | MUL | NULL    |       |
+| TEAMID2        | varchar(20) | YES  | MUL | NULL    |       |
+| SDATE          | date        | YES  |     | NULL    |       |
+| STIME          | timestamp   | YES  |     | NULL    |       |
+| STADIUMID      | varchar(20) | YES  |     | NULL    |       |
+| STADIUM_ID     | varchar(20) | YES  | MUL | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> DROP TABLE MATCH1;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE MATCH1(
+    -> WINNER_TEAM_ID VARCHAR(20),
+    -> FOREIGN KEY(WINNER_TEAM_ID)REFERENCES TEAM(TEAMID),
+    -> MATCHID VARCHAR(20) PRIMARY KEY,
+    -> TEAMID1 VARCHAR(20),
+    -> FOREIGN KEY(TEAMID1)REFERENCES TEAM(TEAMID),
+    -> TEAMID2 VARCHAR(20),
+    -> FOREIGN KEY(TEAMID2)REFERENCES TEAM(TEAMID),
+    -> SDATE DATE,
+    -> STIME TIMESTAMP);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> ALTER TABLE MATCH1
+    -> ADD STADIUM_ID VARCHAR(20);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE MATCH1
+    -> ADD FOREIGN KEY(STADIUM_ID)REFERENCES STADIUM(STADIUM_ID);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC MATCH1;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| WINNER_TEAM_ID | varchar(20) | YES  | MUL | NULL    |       |
+| MATCHID        | varchar(20) | NO   | PRI | NULL    |       |
+| TEAMID1        | varchar(20) | YES  | MUL | NULL    |       |
+| TEAMID2        | varchar(20) | YES  | MUL | NULL    |       |
+| SDATE          | date        | YES  |     | NULL    |       |
+| STIME          | timestamp   | YES  |     | NULL    |       |
+| STADIUM_ID     | varchar(20) | YES  | MUL | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DESC TEAM;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| TEAMID    | varchar(20) | NO   | PRI | NULL    |       |
+| TEAMNAME  | varchar(20) | NO   |     | NULL    |       |
+| COACH     | varchar(20) | YES  |     | NULL    |       |
+| CITY      | varchar(20) | YES  |     | NULL    |       |
+| CAPTAINID | varchar(20) | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> INSERT INTO TEAM('101','CHENNAI','GANGULI','BANGLORE','C1');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''101','CHENNAI','GANGULI','BANGLORE','C1')' at line 1
+mysql> INSERT INTO TEAM
+    -> VALUES('101','CHENNAI','GANGULI','BANGLORE','C1');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`VP21MC023_CRICKET`.`TEAM`, CONSTRAINT `TEAM_ibfk_1` FOREIGN KEY (`CAPTAINID`) REFERENCES `PLAYER` (`PLAYERID`))
+mysql> DESC MAN_OF_MATCH;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| PLAYERID | varchar(20) | NO   | PRI | NULL    |       |
+| MATCHID  | varchar(20) | NO   | PRI | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE MAN_OF_MATCH
+    -> ADD FOREIGN KEY(PLAYERID)REFERENCES PLAYER(TEAMID);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> ALTER TABLE MAN_OF_MATCH
+    -> ADD FOREIGN KEY(MATCHID)REFERENCES MATCH1(STADIUM_ID);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO PLAYER(PLAYERID,PLAYERNAME,CONTACT,AGE)
+    -> VALUES('P1','PAVAN','9023456732','30');
+ERROR 1264 (22003): Out of range value for column 'CONTACT' at row 1
+mysql> DESC PLAYER;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| PLAYERID   | varchar(20) | NO   | PRI | NULL    |       |
+| PLAYERNAME | varchar(20) | NO   |     | NULL    |       |
+| CONTACT    | int         | NO   |     | NULL    |       |
+| AGE        | int         | NO   |     | NULL    |       |
+| TEAMID     | varchar(20) | YES  | MUL | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO PLAYER(PLAYERID,PLAYERNAME,CONTACT,AGE)
+    -> VALUES('P1','PAVAN','902345673','30');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO PLAYER(PLAYERID,PLAYERNAME,CONTACT,AGE)
+    -> VALUES('P2','MACWIL','902845170','25');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO PLAYER(PLAYERID,PLAYERNAME,CONTACT,AGE)
+    -> VALUES('P3','DHONI','912645172','40');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO PLAYER(PLAYERID,PLAYERNAME,CONTACT,AGE)
+    -> VALUES('P4','VIRAT','913545132','67');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> 
+mysql> INSERT INTO PLAYER(PLAYERID,PLAYERNAME,CONTACT,AGE)
+    -> VALUES('P5','JADEJA','913555131','30');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT *FROM PLAYER;
++----------+------------+-----------+-----+--------+
+| PLAYERID | PLAYERNAME | CONTACT   | AGE | TEAMID |
++----------+------------+-----------+-----+--------+
+| P1       | PAVAN      | 902345673 |  30 | NULL   |
+| P2       | MACWIL     | 902845170 |  25 | NULL   |
+| P3       | DHONI      | 912645172 |  40 | NULL   |
+| P4       | VIRAT      | 913545132 |  67 | NULL   |
+| P5       | JADEJA     | 913555131 |  30 | NULL   |
++----------+------------+-----------+-----+--------+
+5 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO TEAM(TEAMID,TEAMNAME,COACH,CITY,CAPTAINID)
+    -> VALUES('T1','CSK','GANGULI','BANGLORE','C1');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`VP21MC023_CRICKET`.`TEAM`, CONSTRAINT `TEAM_ibfk_1` FOREIGN KEY (`CAPTAINID`) REFERENCES `PLAYER` (`PLAYERID`))
+mysql> INSERT INTO TEAM(TEAMID,TEAMNAME,COACH,CITY,CAPTAINID)
+    -> VALUES('T1','CSK','GANGULI','BANGLORE');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO TEAM(TEAMID,TEAMNAME,COACH,CITY)
+    -> VALUES('T1','CSK','GANGULI','BANGLORE');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO TEAM(TEAMID,TEAMNAME,COACH,CITY)
+    -> VALUES('T2','RCB','KAPIL','BANGLORE');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO TEAM(TEAMID,TEAMNAME,COACH,CITY)
+    -> VALUES('T3','MI','ROHITH','MUMBAI');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO TEAM(TEAMID,TEAMNAME,COACH,CITY)
+    -> VALUES('T4','PUNJAB','KAPIL','BANGLORE');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT *FROM TEAM;
++--------+----------+---------+----------+-----------+
+| TEAMID | TEAMNAME | COACH   | CITY     | CAPTAINID |
++--------+----------+---------+----------+-----------+
+| T1     | CSK      | GANGULI | BANGLORE | NULL      |
+| T2     | RCB      | KAPIL   | BANGLORE | NULL      |
+| T3     | MI       | ROHITH  | MUMBAI   | NULL      |
+| T4     | PUNJAB   | KAPIL   | BANGLORE | NULL      |
++--------+----------+---------+----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE PLAYER
+    -> SET TEAMID='T1'
+    -> WHERE PLAYERID='P1';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM PLAYER;
++----------+------------+-----------+-----+--------+
+| PLAYERID | PLAYERNAME | CONTACT   | AGE | TEAMID |
++----------+------------+-----------+-----+--------+
+| P1       | PAVAN      | 902345673 |  30 | T1     |
+| P2       | MACWIL     | 902845170 |  25 | NULL   |
+| P3       | DHONI      | 912645172 |  40 | NULL   |
+| P4       | VIRAT      | 913545132 |  67 | NULL   |
+| P5       | JADEJA     | 913555131 |  30 | NULL   |
++----------+------------+-----------+-----+--------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE PLAYER
+    -> SET TEAMID='T2'
+    -> WHERE PLAYERID='P2';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE PLAYER
+    -> SET TEAMID='T3'
+    -> WHERE PLAYERID='P3';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM PLAYER;
++----------+------------+-----------+-----+--------+
+| PLAYERID | PLAYERNAME | CONTACT   | AGE | TEAMID |
++----------+------------+-----------+-----+--------+
+| P1       | PAVAN      | 902345673 |  30 | T1     |
+| P2       | MACWIL     | 902845170 |  25 | T2     |
+| P3       | DHONI      | 912645172 |  40 | T3     |
+| P4       | VIRAT      | 913545132 |  67 | NULL   |
+| P5       | JADEJA     | 913555131 |  30 | NULL   |
++----------+------------+-----------+-----+--------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE TEAM
+    -> SET CAPTAINID='C1'
+    -> WHERE TEAMID='T1';
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`VP21MC023_CRICKET`.`TEAM`, CONSTRAINT `TEAM_ibfk_1` FOREIGN KEY (`CAPTAINID`) REFERENCES `PLAYER` (`PLAYERID`))
+mysql> INSERT INTO STADIUM(STADIUM_ID,STADIUMNAME,CITY,AREA_NAME,PINCODE)
+    -> VALUES('S1','KANTIRAVA','BANGLORE','RRNAGARA','574203');
+ERROR 1054 (42S22): Unknown column 'STADIUMNAME' in 'field list'
+mysql> DESC STADIUM;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| STADIUM_ID   | varchar(20) | NO   | PRI | NULL    |       |
+| STADIUM_NAME | varchar(20) | NO   |     | NULL    |       |
+| CITY         | varchar(20) | YES  |     | NULL    |       |
+| AREA_NAME    | varchar(20) | YES  |     | NULL    |       |
+| PINCODE      | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO STADIUM(STADIUM_ID,STADIUM_NAME,CITY,AREA_NAME,PINCODE)
+    -> VALUES('S1','KANTIRAVA','BANGLORE','RRNAGARA','574203');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO STADIUM(STADIUM_ID,STADIUM_NAME,CITY,AREA_NAME,PINCODE)
+    -> VALUES('S2','PRATHIBHA','BANGLORE','RRNAGARA','574203');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO STADIUM(STADIUM_ID,STADIUM_NAME,CITY,AREA_NAME,PINCODE)
+    -> VALUES('S5','INTERNATIONAL','MUMBAI','MARIL','76453');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO STADIUM(STADIUM_ID,STADIUM_NAME,CITY,AREA_NAME,PINCODE)
+    -> VALUES('S3','SABHABHAVANA','MUMBAI','MANGLORE','76452');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO STADIUM(STADIUM_ID,STADIUM_NAME,CITY,AREA_NAME,PINCODE)
+    -> VALUES('S4','INTERNATIONAL','MUMBAI','RRNAGARA','76451');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT *FROM STADIUM;
++------------+---------------+----------+-----------+---------+
+| STADIUM_ID | STADIUM_NAME  | CITY     | AREA_NAME | PINCODE |
++------------+---------------+----------+-----------+---------+
+| S1         | KANTIRAVA     | BANGLORE | RRNAGARA  |  574203 |
+| S2         | PRATHIBHA     | BANGLORE | RRNAGARA  |  574203 |
+| S3         | SABHABHAVANA  | MUMBAI   | MANGLORE  |   76452 |
+| S4         | INTERNATIONAL | MUMBAI   | RRNAGARA  |   76451 |
+| S5         | INTERNATIONAL | MUMBAI   | MARIL     |   76453 |
++------------+---------------+----------+-----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO MATCH1(MATCHID,TEAMID1,TEAMID2,SDATE,STIME,STADIUM_ID)
+    -> VALUES('M1','101','201','2019-09-02','12:00','S1');
+ERROR 1292 (22007): Incorrect datetime value: '12:00' for column 'STIME' at row 1
+mysql> INSERT INTO MATCH1(MATCHID,TEAMID1,TEAMID2,SDATE,STIME,STADIUM_ID)
+    -> VALUES('M1','101','201','2019-09-02','190902','S1');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`VP21MC023_CRICKET`.`MATCH1`, CONSTRAINT `MATCH1_ibfk_2` FOREIGN KEY (`TEAMID1`) REFERENCES `TEAM` (`TEAMID`))
+mysql> INSERT INTO MATCH1(MATCHID,SDATE,STIME,STADIUM_ID)
+    -> VALUES('M1','2019-09-02','190902','S1');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO MATCH1(MATCHID,SDATE,STIME,STADIUM_ID)
+    -> VALUES('M2','2020-11-12','201112','S1');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO MATCH1(MATCHID,SDATE,STIME,STADIUM_ID)
+    -> VALUES('M3','2021-06-15','210615','S2');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO MATCH1(WINNER_TEAM_ID,MATCHID,SDATE,STIME,STADIUM_ID)
+    -> VALUES('W1','M4','2021-06-15','210615','S2');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`VP21MC023_CRICKET`.`MATCH1`, CONSTRAINT `MATCH1_ibfk_1` FOREIGN KEY (`WINNER_TEAM_ID`) REFERENCES `TEAM` (`TEAMID`))
+mysql> INSERT INTO MATCH1(MATCHID,SDATE,STIME,STADIUM_ID)
+    -> VALUES('M4','2021-06-15','210615','S2');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT *FROM MATCH;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MATCH' at line 1
+mysql> SELECT *FROM MATCH1;
++----------------+---------+---------+---------+------------+---------------------+------------+
+| WINNER_TEAM_ID | MATCHID | TEAMID1 | TEAMID2 | SDATE      | STIME               | STADIUM_ID |
++----------------+---------+---------+---------+------------+---------------------+------------+
+| NULL           | M1      | NULL    | NULL    | 2019-09-02 | 2019-09-02 00:00:00 | S1         |
+| NULL           | M2      | NULL    | NULL    | 2020-11-12 | 2020-11-12 00:00:00 | S1         |
+| NULL           | M3      | NULL    | NULL    | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| NULL           | M4      | NULL    | NULL    | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
++----------------+---------+---------+---------+------------+---------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO MATCH1(MATCHID,SDATE,STIME,STADIUM_ID)
+    -> VALUES('M5','2018-04-11','180411','S3');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT *FROM MATCH1;
++----------------+---------+---------+---------+------------+---------------------+------------+
+| WINNER_TEAM_ID | MATCHID | TEAMID1 | TEAMID2 | SDATE      | STIME               | STADIUM_ID |
++----------------+---------+---------+---------+------------+---------------------+------------+
+| NULL           | M1      | NULL    | NULL    | 2019-09-02 | 2019-09-02 00:00:00 | S1         |
+| NULL           | M2      | NULL    | NULL    | 2020-11-12 | 2020-11-12 00:00:00 | S1         |
+| NULL           | M3      | NULL    | NULL    | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| NULL           | M4      | NULL    | NULL    | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| NULL           | M5      | NULL    | NULL    | 2018-04-11 | 2018-04-11 00:00:00 | S3         |
++----------------+---------+---------+---------+------------+---------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO MAN_OF_MATCH(PLAYERID,MATCHID)
+    -> VALUES('P1','M1');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`VP21MC023_CRICKET`.`MAN_OF_MATCH`, CONSTRAINT `MAN_OF_MATCH_ibfk_1` FOREIGN KEY (`PLAYERID`) REFERENCES `PLAYER` (`TEAMID`))
+mysql> SELECT *FROM TEAM;
++--------+----------+---------+----------+-----------+
+| TEAMID | TEAMNAME | COACH   | CITY     | CAPTAINID |
++--------+----------+---------+----------+-----------+
+| T1     | CSK      | GANGULI | BANGLORE | NULL      |
+| T2     | RCB      | KAPIL   | BANGLORE | NULL      |
+| T3     | MI       | ROHITH  | MUMBAI   | NULL      |
+| T4     | PUNJAB   | KAPIL   | BANGLORE | NULL      |
++--------+----------+---------+----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE TEAM
+    -> SET CAPTAINID='C1'
+    -> WHERE TEAMID='T1';
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`VP21MC023_CRICKET`.`TEAM`, CONSTRAINT `TEAM_ibfk_1` FOREIGN KEY (`CAPTAINID`) REFERENCES `PLAYER` (`PLAYERID`))
+mysql> SELECT *FROM PLAYER;
++----------+------------+-----------+-----+--------+
+| PLAYERID | PLAYERNAME | CONTACT   | AGE | TEAMID |
++----------+------------+-----------+-----+--------+
+| P1       | PAVAN      | 902345673 |  30 | T1     |
+| P2       | MACWIL     | 902845170 |  25 | T2     |
+| P3       | DHONI      | 912645172 |  40 | T3     |
+| P4       | VIRAT      | 913545132 |  67 | NULL   |
+| P5       | JADEJA     | 913555131 |  30 | NULL   |
++----------+------------+-----------+-----+--------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT *FROM MATCH;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MATCH' at line 1
+mysql> SELECT *FROM MATCH1;
++----------------+---------+---------+---------+------------+---------------------+------------+
+| WINNER_TEAM_ID | MATCHID | TEAMID1 | TEAMID2 | SDATE      | STIME               | STADIUM_ID |
++----------------+---------+---------+---------+------------+---------------------+------------+
+| NULL           | M1      | NULL    | NULL    | 2019-09-02 | 2019-09-02 00:00:00 | S1         |
+| NULL           | M2      | NULL    | NULL    | 2020-11-12 | 2020-11-12 00:00:00 | S1         |
+| NULL           | M3      | NULL    | NULL    | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| NULL           | M4      | NULL    | NULL    | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| NULL           | M5      | NULL    | NULL    | 2018-04-11 | 2018-04-11 00:00:00 | S3         |
++----------------+---------+---------+---------+------------+---------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT *FROM STADIUM;
++------------+---------------+----------+-----------+---------+
+| STADIUM_ID | STADIUM_NAME  | CITY     | AREA_NAME | PINCODE |
++------------+---------------+----------+-----------+---------+
+| S1         | KANTIRAVA     | BANGLORE | RRNAGARA  |  574203 |
+| S2         | PRATHIBHA     | BANGLORE | RRNAGARA  |  574203 |
+| S3         | SABHABHAVANA  | MUMBAI   | MANGLORE  |   76452 |
+| S4         | INTERNATIONAL | MUMBAI   | RRNAGARA  |   76451 |
+| S5         | INTERNATIONAL | MUMBAI   | MARIL     |   76453 |
++------------+---------------+----------+-----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT *FROM MAN_OF_MATCH;
+Empty set (0.00 sec)
+
+mysql> UPDATE TEAM
+    -> SET CAPTAINID='P1'
+    -> WHERE TEAMID='T1';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE TEAM
+    -> SET CAPTAINID='P2'
+    -> WHERE TEAMID='T1';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE TEAM
+    -> SET CAPTAINID='P3'
+    -> WHERE TEAMID='T2';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE TEAM
+    -> SET CAPTAINID='P3'
+    -> WHERE TEAMID='T3';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE TEAM
+    -> SET CAPTAINID='P4'
+    -> WHERE TEAMID='T3';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM TEAM;
++--------+----------+---------+----------+-----------+
+| TEAMID | TEAMNAME | COACH   | CITY     | CAPTAINID |
++--------+----------+---------+----------+-----------+
+| T1     | CSK      | GANGULI | BANGLORE | P2        |
+| T2     | RCB      | KAPIL   | BANGLORE | P3        |
+| T3     | MI       | ROHITH  | MUMBAI   | P4        |
+| T4     | PUNJAB   | KAPIL   | BANGLORE | NULL      |
++--------+----------+---------+----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> DESC MATCH1;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| WINNER_TEAM_ID | varchar(20) | YES  | MUL | NULL    |       |
+| MATCHID        | varchar(20) | NO   | PRI | NULL    |       |
+| TEAMID1        | varchar(20) | YES  | MUL | NULL    |       |
+| TEAMID2        | varchar(20) | YES  | MUL | NULL    |       |
+| SDATE          | date        | YES  |     | NULL    |       |
+| STIME          | timestamp   | YES  |     | NULL    |       |
+| STADIUM_ID     | varchar(20) | YES  | MUL | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> UPDATE MATCH1
+    -> SET WINNER_TEAM_ID='T1'
+    -> WHERE MATCHID='M1';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MATCH1
+    -> SET WINNER_TEAM_ID='T2'
+    -> WHERE MATCHID='M3';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MATCH1
+    -> SET WINNER_TEAM_ID='T1'
+    -> WHERE MATCHID='M2';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MATCH1
+    -> SET WINNER_TEAM_ID='T3'
+    -> WHERE MATCHID='M4';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MATCH1
+    -> SET WINNER_TEAM_ID='T5'
+    -> WHERE MATCHID='M5';
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`VP21MC023_CRICKET`.`MATCH1`, CONSTRAINT `MATCH1_ibfk_1` FOREIGN KEY (`WINNER_TEAM_ID`) REFERENCES `TEAM` (`TEAMID`))
+mysql> UPDATE MATCH1
+    -> SET WINNER_TEAM_ID='T2'
+    -> WHERE MATCHID='M3';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> SELECT *FROM MATCH1;
++----------------+---------+---------+---------+------------+---------------------+------------+
+| WINNER_TEAM_ID | MATCHID | TEAMID1 | TEAMID2 | SDATE      | STIME               | STADIUM_ID |
++----------------+---------+---------+---------+------------+---------------------+------------+
+| T1             | M1      | NULL    | NULL    | 2019-09-02 | 2019-09-02 00:00:00 | S1         |
+| T1             | M2      | NULL    | NULL    | 2020-11-12 | 2020-11-12 00:00:00 | S1         |
+| T2             | M3      | NULL    | NULL    | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| T3             | M4      | NULL    | NULL    | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| NULL           | M5      | NULL    | NULL    | 2018-04-11 | 2018-04-11 00:00:00 | S3         |
++----------------+---------+---------+---------+------------+---------------------+------------+
+5 rows in set (0.01 sec)
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID1='101'
+    -> WHERE MATCHID='M1';
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`VP21MC023_CRICKET`.`MATCH1`, CONSTRAINT `MATCH1_ibfk_2` FOREIGN KEY (`TEAMID1`) REFERENCES `TEAM` (`TEAMID`))
+mysql> UPDATE MATCH1
+    -> SET TEAMID1='T1'
+    -> WHERE MATCHID='M1';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID1='T1'
+    -> WHERE MATCHID='M2';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID1='T2'
+    -> WHERE MATCHID='M3';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT PLAYERNAME,PLAYERID,AGE,MIN(AGE),
+    -> FROM PLAYER
+    -> GROUP BY TEAMID ORDER BY AGE AESC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM PLAYER
+GROUP BY TEAMID ORDER BY AGE AESC' at line 2
+mysql> UPDATE MATCH1
+    -> SET TEAMID1='T3'
+    -> WHERE MATCHID='M3';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID1='T2'
+    -> WHERE MATCHID='M1';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM MATCH1;
++----------------+---------+---------+---------+------------+---------------------+------------+
+| WINNER_TEAM_ID | MATCHID | TEAMID1 | TEAMID2 | SDATE      | STIME               | STADIUM_ID |
++----------------+---------+---------+---------+------------+---------------------+------------+
+| T1             | M1      | T2      | NULL    | 2019-09-02 | 2019-09-02 00:00:00 | S1         |
+| T1             | M2      | T1      | NULL    | 2020-11-12 | 2020-11-12 00:00:00 | S1         |
+| T2             | M3      | T3      | NULL    | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| T3             | M4      | NULL    | NULL    | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| NULL           | M5      | NULL    | NULL    | 2018-04-11 | 2018-04-11 00:00:00 | S3         |
++----------------+---------+---------+---------+------------+---------------------+------------+
+5 rows in set (0.01 sec)
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID2='T1'
+    -> WHERE MATCHID='M1';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID2='T1'
+    -> WHERE MATCHID='M2';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID2='T3'
+    -> WHERE MATCHID='M2';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID2='T3'
+    -> WHERE MATCHID='M2';
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID2='T1'
+    -> WHERE MATCHID='M2';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM MATCH1;
++----------------+---------+---------+---------+------------+---------------------+------------+
+| WINNER_TEAM_ID | MATCHID | TEAMID1 | TEAMID2 | SDATE      | STIME               | STADIUM_ID |
++----------------+---------+---------+---------+------------+---------------------+------------+
+| T1             | M1      | T2      | T1      | 2019-09-02 | 2019-09-02 00:00:00 | S1         |
+| T1             | M2      | T1      | T1      | 2020-11-12 | 2020-11-12 00:00:00 | S1         |
+| T2             | M3      | T3      | NULL    | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| T3             | M4      | NULL    | NULL    | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| NULL           | M5      | NULL    | NULL    | 2018-04-11 | 2018-04-11 00:00:00 | S3         |
++----------------+---------+---------+---------+------------+---------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID2='T3'
+    -> WHERE MATCHID='M4';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM MATCH1;
++----------------+---------+---------+---------+------------+---------------------+------------+
+| WINNER_TEAM_ID | MATCHID | TEAMID1 | TEAMID2 | SDATE      | STIME               | STADIUM_ID |
++----------------+---------+---------+---------+------------+---------------------+------------+
+| T1             | M1      | T2      | T1      | 2019-09-02 | 2019-09-02 00:00:00 | S1         |
+| T1             | M2      | T1      | T1      | 2020-11-12 | 2020-11-12 00:00:00 | S1         |
+| T2             | M3      | T3      | NULL    | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| T3             | M4      | NULL    | T3      | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| NULL           | M5      | NULL    | NULL    | 2018-04-11 | 2018-04-11 00:00:00 | S3         |
++----------------+---------+---------+---------+------------+---------------------+------------+
+5 rows in set (0.01 sec)
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID2='T2'
+    -> WHERE MATCHID='M3';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM MATCH1;
++----------------+---------+---------+---------+------------+---------------------+------------+
+| WINNER_TEAM_ID | MATCHID | TEAMID1 | TEAMID2 | SDATE      | STIME               | STADIUM_ID |
++----------------+---------+---------+---------+------------+---------------------+------------+
+| T1             | M1      | T2      | T1      | 2019-09-02 | 2019-09-02 00:00:00 | S1         |
+| T1             | M2      | T1      | T1      | 2020-11-12 | 2020-11-12 00:00:00 | S1         |
+| T2             | M3      | T3      | T2      | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| T3             | M4      | NULL    | T3      | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| NULL           | M5      | NULL    | NULL    | 2018-04-11 | 2018-04-11 00:00:00 | S3         |
++----------------+---------+---------+---------+------------+---------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE MATCH1
+    -> SET WINNER_TEAM_ID='T2'
+    -> WHERE MATCHID='M5';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM MATCH1;
++----------------+---------+---------+---------+------------+---------------------+------------+
+| WINNER_TEAM_ID | MATCHID | TEAMID1 | TEAMID2 | SDATE      | STIME               | STADIUM_ID |
++----------------+---------+---------+---------+------------+---------------------+------------+
+| T1             | M1      | T2      | T1      | 2019-09-02 | 2019-09-02 00:00:00 | S1         |
+| T1             | M2      | T1      | T1      | 2020-11-12 | 2020-11-12 00:00:00 | S1         |
+| T2             | M3      | T3      | T2      | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| T3             | M4      | NULL    | T3      | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| T2             | M5      | NULL    | NULL    | 2018-04-11 | 2018-04-11 00:00:00 | S3         |
++----------------+---------+---------+---------+------------+---------------------+------------+
+5 rows in set (0.01 sec)
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID='T3'
+    -> WHERE MATCHID='M4';
+ERROR 1054 (42S22): Unknown column 'TEAMID' in 'field list'
+mysql> UPDATE MATCH1
+    -> SET TEAMID1='T3'
+    -> WHERE MATCHID='M4';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID1='T2'
+    -> WHERE MATCHID='M5';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM MATCH1;
++----------------+---------+---------+---------+------------+---------------------+------------+
+| WINNER_TEAM_ID | MATCHID | TEAMID1 | TEAMID2 | SDATE      | STIME               | STADIUM_ID |
++----------------+---------+---------+---------+------------+---------------------+------------+
+| T1             | M1      | T2      | T1      | 2019-09-02 | 2019-09-02 00:00:00 | S1         |
+| T1             | M2      | T1      | T1      | 2020-11-12 | 2020-11-12 00:00:00 | S1         |
+| T2             | M3      | T3      | T2      | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| T3             | M4      | T3      | T3      | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| T2             | M5      | T2      | NULL    | 2018-04-11 | 2018-04-11 00:00:00 | S3         |
++----------------+---------+---------+---------+------------+---------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE MATCH1
+    -> SET TEAMID2='T2'
+    -> WHERE MATCHID='M5';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM MATCH1;
++----------------+---------+---------+---------+------------+---------------------+------------+
+| WINNER_TEAM_ID | MATCHID | TEAMID1 | TEAMID2 | SDATE      | STIME               | STADIUM_ID |
++----------------+---------+---------+---------+------------+---------------------+------------+
+| T1             | M1      | T2      | T1      | 2019-09-02 | 2019-09-02 00:00:00 | S1         |
+| T1             | M2      | T1      | T1      | 2020-11-12 | 2020-11-12 00:00:00 | S1         |
+| T2             | M3      | T3      | T2      | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| T3             | M4      | T3      | T3      | 2021-06-15 | 2021-06-15 00:00:00 | S2         |
+| T2             | M5      | T2      | T2      | 2018-04-11 | 2018-04-11 00:00:00 | S3         |
++----------------+---------+---------+---------+------------+---------------------+------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT *FROM TEAM;
++--------+----------+---------+----------+-----------+
+| TEAMID | TEAMNAME | COACH   | CITY     | CAPTAINID |
++--------+----------+---------+----------+-----------+
+| T1     | CSK      | GANGULI | BANGLORE | P2        |
+| T2     | RCB      | KAPIL   | BANGLORE | P3        |
+| T3     | MI       | ROHITH  | MUMBAI   | P4        |
+| T4     | PUNJAB   | KAPIL   | BANGLORE | NULL      |
++--------+----------+---------+----------+-----------+
+4 rows in set (0.01 sec)
+
+mysql> INSERT INTO MAN_OF_MATCH(PLAYERID,MATCHID)
+    -> VALUES('P1','M1');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`VP21MC023_CRICKET`.`MAN_OF_MATCH`, CONSTRAINT `MAN_OF_MATCH_ibfk_1` FOREIGN KEY (`PLAYERID`) REFERENCES `PLAYER` (`TEAMID`))
+mysql> UPDATE MAN_OF_MATCH
+    -> SET PLAYERID='P1';
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE MAN_OF_MATCH
+    -> SET PLAYERID='P1';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE MAN_OF_MATCH
+    -> SET PLAYERID='P2';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE MAN_OF_MATCH
+    -> SET PLAYERID='P3';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE MAN_OF_MATCH
+    -> SET PLAYERID='P2';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> SELECT *FROM MAN_OF_MATCH;
+Empty set (0.00 sec)
+
+mysql> CREATE TABLE MAN_OF_MATCH(
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> DESC MAN_OF_MATCH;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| PLAYERID | varchar(20) | NO   | PRI | NULL    |       |
+| MATCHID  | varchar(20) | NO   | PRI | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *FROM MAN_OF_MATCH;
+Empty set (0.01 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT PLAYERNAME,PLAYERID,AGE
+    -> FROM PLAYER
+    -> ;
++------------+----------+-----+
+| PLAYERNAME | PLAYERID | AGE |
++------------+----------+-----+
+| PAVAN      | P1       |  30 |
+| MACWIL     | P2       |  25 |
+| DHONI      | P3       |  40 |
+| VIRAT      | P4       |  67 |
+| JADEJA     | P5       |  30 |
++------------+----------+-----+
+5 rows in set (0.00 sec)
+
+mysql> SELECT PLAYERID,PLAYERNAME,MIN(AGE)
+    -> FROM PLAYER;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'VP21MC023_CRICKET.PLAYER.PLAYERID'; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT PLAYERID,PLAYERNAME,MIN(AGE)
+    -> FROM PLAYER
+    -> WHERE ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> COMMIT;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+
+
