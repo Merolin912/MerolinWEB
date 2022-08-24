@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 11a</title>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+         $(function(){
+            $("button").click(function(){
+                if($(this).text()=='FADE OUT'){
+                $("div").fadeOut(1000);
+                $(this).text('FADE IN');
+            }
+            else{
+                $("div").fadeIn(1000);
+                $(this).text('FADE OUT');
+
+            }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, molestiae ratione! Iure atque itaque nulla alias, tempora minima quisquam reiciendis repellendus pariatur earum adipisci reprehenderit numquam repudiandae quasi optio non!</p>
+    </div>
+    <button>FADE OUT</button>
+    <button>FADE IN</button>
+    
+</body>
+</html>
